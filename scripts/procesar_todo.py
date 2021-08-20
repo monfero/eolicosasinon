@@ -7,18 +7,19 @@
 ## campos: nome;coord X;coord Y   (coordenadas UTM)
 ## as coordenadas teñen a parte enteira e decimal separada por ,
 
-## OUTPUT: ficheiro KML
+## OUTPUT: ficheiro KMZ no directorio ./output
 
-from os import name
+import os
 import sys
 import csv
 import re
 import itertools
 import simplekml
 from pyproj import CRS, Transformer
+from zipfile import ZipFile
 
 #Introducir manualmente rango de filas para cada cosa. A la primera fila del
-#rango hay que restarle una unidad.
+#rango hay que restarle una unidad. (seguro?)
 #Rango Aerogeneradores
 ai = 0
 aj = 0
@@ -40,29 +41,28 @@ if (len(sys.argv)!=2):
     exit(1)
 
 nome_ficheiro = sys.argv[1]
-novo_ficheiro = nome_ficheiro[0:-3]+"kml"
+ficheiro_temporal = "temp_"+nome_ficheiro
+novo_ficheiro = nome_ficheiro[0:-3]+"kmz"
 
-# a quite strange way to modify the CSV source
-# cambianse as comas por puntos
-# despois cambianse os punto-e-coma por comas
+# Utilízase un ficheiro temporal onde se substitúen algúns caracteres
 with open(nome_ficheiro, "r") as sources:
     lines = sources.readlines()
-with open(nome_ficheiro, "w") as sources:
+with open(ficheiro_temporal, "w") as sources:
     for line in lines:
         sources.write(re.sub(r',', '.', line))
 
-with open(nome_ficheiro, "r") as sources:
+with open(ficheiro_temporal, "r") as sources:
     lines = sources.readlines()
-with open(nome_ficheiro, "w") as sources:
+with open(ficheiro_temporal, "w") as sources:
     for line in lines:
         sources.write(re.sub(r';', ',', line))
 
 
-inputfile = list(csv.reader(open(nome_ficheiro,'r')))
+inputfile = list(csv.reader(open(ficheiro_temporal,'r')))
 
 kml=simplekml.Kml()
 
-#establécese orixe e destino da transformación
+#establécense orixe e destino da transformación
 trans = Transformer.from_crs("EPSG:25829","EPSG:4326",always_xy=True)
 
 # POLIGONAL PARQUE
@@ -98,7 +98,7 @@ if(si!=0):
 # AEROXENERADORES MODELO 3D
 if(ai!=0):
     for row in itertools.islice(inputfile, ai-1, aj):
-        modelLink = simplekml.Link(href = "img/untitled.dae")
+        modelLink = simplekml.Link(href = "untitled.dae")
         coordsSet= trans.transform(row[1],row[2])
         coords = simplekml.Location(longitude=coordsSet[0], latitude=coordsSet[1], altitude=0)
         model = kml.newmodel(name=row[0],description='aeroxenerador',altitudemode='relativeToGround', location=coords, link=modelLink)
@@ -109,7 +109,7 @@ if(ti!=0):
     for row in itertools.islice(inputfile, ti-1, tj):
         pnt = kml.newpoint(name=row[0], coords=[trans.transform(row[1],row[2])])
         pnt.style.iconstyle.scale = 0.8  # Icon thrice as big
-        pnt.style.iconstyle.icon.href = "img/torremet.png"
+        pnt.style.iconstyle.icon.href = "torremet.png"
 
 # LINEA LAAT
 if(li!=0):
@@ -121,13 +121,27 @@ if(li!=0):
         laatpnt = kml.newpoint(name=row[0])
         laatpnt.coords = [coordsSetLAAT]
         laatpnt.style.iconstyle.scale = 0.7
-        laatpnt.style.iconstyle.icon.href = "img/laat.png"
+        laatpnt.style.iconstyle.icon.href = "laat.png"
 
     #Línea
     lin = kml.newlinestring(name="LAAT", description="Linea Aerea Alta Tensión", coords=coordListLAAT)
     lin.style.linestyle.color = simplekml.Color.rgb(2,136,209)
     lin.style.linestyle.width= 5  # 5 pixels
 
-
 #garda o ficheiro
-kml.save(novo_ficheiro)
+kml.save('doc.kml')
+
+# create a ZipFile object
+zipObj = ZipFile('output/'+novo_ficheiro, 'w')
+# Add multiple files to the zip
+zipObj.write('doc.kml')
+zipObj.write('molino.png')
+zipObj.write('torremet.png')
+zipObj.write('laat.png')
+zipObj.write('untitled.dae')
+# close the Zip File
+zipObj.close()
+
+#elimina ficheiros temporais
+os.remove('doc.kml')
+os.remove(ficheiro_temporal)
