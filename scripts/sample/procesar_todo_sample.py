@@ -21,20 +21,20 @@ from zipfile import ZipFile
 #Introducir manualmente rango de filas para cada cosa. A la primera fila del
 #rango hay que restarle una unidad. (seguro?)
 #Rango Aerogeneradores
-ai = 0
-aj = 0
+ai = 1
+aj = 2
 #Rango LAAT
-li = 0
-lj = 0
+li = 3
+lj = 6
 #Rango Poligonal parque
-pi = 0
-pj = 0
+pi = 7
+pj = 10
 #Rango Poligonal subestacion
-si = 0
-sj = 0
+si = 11
+sj = 14
 #Rango Torres metereológicas
-ti = 0
-tj = 0
+ti = 15
+tj = 15
 
 if (len(sys.argv)!=2):
     print("Tes que indicar o nome do ficheiro CSV ou non vai funcionar!")
