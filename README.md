@@ -1,5 +1,7 @@
-# eolicosasinon
+# #eolicosAsiNon
 Ferramentas para a defensa do territorio contra os macroparques eolicos
+
+**procesar_todo.py** - O script serve para crear unha visualización dos diferentes elementos dun parque eólico (aeroxeneradores, liñas de alta tensión (LAAT), poligonais, ...) a partir dos datos publicados no BOE. Os datos extráense de xeito manual desde a publicación do BOE e gárdanse nunha folla de cálculo. O script traduce as coordenadas dos diferentes elementos, en formato EPSG:25829, a formato EPSG:4326, e crea un ficheiro KMZ que se pode importar en ferramentas como Google Maps ou Google Eearth. 
 
 ## Uso
 
@@ -8,6 +10,9 @@ Ferramentas para a defensa do territorio contra os macroparques eolicos
 3. Configura o script "procesar_todo.py" indicando os rangos dos diferentes elementos do mapa.
 4. Executa o script sobre o teu ficheiro de datos en csv.
 
+Executar o script:
+
+    python3 procesar_todo.py ficheiro_de_datos.csv
 
 ## Exemplo
 
@@ -29,6 +34,18 @@ No directorio "sample" tes algúns ficheiros que te poden axudar a entender como
 
 ![Exemplo de configuración de script](img/sample_configuracion_script.png)
 
-5. Unha vez executado o script obtense un ficheiro KMZ que se pode importar nas ferramentas de mapas de Google. O resultado do exemplo pode verse na imaxe.
+5. Execución dos datos de exemplo
+
+Código:
+
+    cd scripts #entrar no directorio onde está o código
+    cp sample/sample_modelo_datos.csv . #copiar os datos do exemplo ao directorio de execución
+    cp sample/procesar_todo_sample.py . #copiar o script configurado para o exemplo no directorio de execución
+    python3 procesar_todo_sample.py sample_modelo_datos.csv #executar o script
+
+![Exemplo execución do script](img/sample_execucion_script.png)
+
+
+6. Unha vez executado o script obtense un ficheiro KMZ que se pode importar nas ferramentas de mapas de Google. O resultado do exemplo pode verse na imaxe.
 
 ![Resultado de visualización](img/sample_resultado_parque.png)
