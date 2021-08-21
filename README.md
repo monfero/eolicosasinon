@@ -1,7 +1,7 @@
 # #eolicosAsiNon
 Ferramentas para a defensa do territorio contra os macroparques eolicos
 
-**procesar_todo.py** - O script serve para crear unha visualización dos diferentes elementos dun parque eólico (aeroxeneradores, liñas de alta tensión (LAAT), poligonais, ...) a partir dos datos publicados no BOE. Os datos extráense de xeito manual desde a publicación do BOE e gárdanse nunha folla de cálculo. O script traduce as coordenadas dos diferentes elementos, en formato EPSG:25829, a formato EPSG:4326, e crea un ficheiro KMZ que se pode importar en ferramentas como Google Maps ou Google Eearth. 
+**procesar_todo.py** - O script serve para crear unha visualización dos diferentes elementos dun parque eólico (aeroxeneradores, liñas de alta tensión (LAAT), poligonais, ...) a partir dos datos publicados no BOE. Os datos extráense de xeito manual desde a publicación do BOE e gárdanse nunha folla de cálculo. O script traduce as coordenadas dos diferentes elementos, en formato EPSG:25829, a formato EPSG:4326, e crea un ficheiro KMZ que se pode importar en ferramentas como Google Maps ou Google Eearth.
 
 ## Uso
 
@@ -13,6 +13,47 @@ Ferramentas para a defensa do territorio contra os macroparques eolicos
 Executar o script:
 
     python3 procesar_todo.py ficheiro_de_datos.csv
+
+## Configuración do equipo
+
+Para executar o script debes ter instalado **python3**, así como algunhas librarías adicionais e outras ferramentas como **git** para descargar o código.
+
+Como exemplo proponse unha instalación predeterminada da distribución gnu/Linux Ubuntu 20.04.
+
+### Python
+
+Esta distribución trae instalado python de xeito predeterminado. Podes comprobar a versión escribindo o seguinte código:
+
+    usuario@maquina:~$ python3 --version
+    Python 3.8.5
+
+En caso de que non estea instalado podes instalalo coas seguintes ordes:
+
+    usuario@maquina:~$ sudo apt-get update
+    usuario@maquina:~$ sudo apt-get install python3
+
+Será necesario que instales algunhas librarías extra para poder executar o script. Podes facelo coa ferramenta **pip**.
+
+    usuario@maquina:~$ sudo apt-get install python3-pip
+
+    usuario@maquina:~$ pip3 install simplekml
+    usuario@maquina:~$ pip3 install numpy
+    usuario@maquina:~$ pip3 install geopandas
+    usuario@maquina:~$ pip3 install pyproj
+
+### Git
+
+Comproba se a ferramenta git está instalada:
+
+    usuario@maquina:~$ git --version
+    git version 2.25.1
+
+En caso de que non estea instalado podes instalalo coas seguintes ordes:
+
+    usuario@maquina:~$ sudo apt-get update
+    usuario@maquina:~$ sudo apt-get install git
+
+
 
 ## Exemplo
 
