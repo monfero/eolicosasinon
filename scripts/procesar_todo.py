@@ -18,8 +18,7 @@ import simplekml
 from pyproj import CRS, Transformer
 from zipfile import ZipFile
 
-#Introducir manualmente rango de filas para cada cosa. A la primera fila del
-#rango hay que restarle una unidad. (seguro?)
+#Introducir manualmente rango de filas para cada cosa
 #Rango Aerogeneradores
 ai = 0
 aj = 0
@@ -32,6 +31,9 @@ pj = 0
 #Rango Poligonal subestacion
 si = 0
 sj = 0
+#Puntos Subestación 
+psi = 0
+psj = 0
 #Rango Torres metereológicas
 ti = 0
 tj = 0
@@ -63,7 +65,8 @@ inputfile = list(csv.reader(open(ficheiro_temporal,'r')))
 kml=simplekml.Kml()
 
 #establécense orixe e destino da transformación
-trans = Transformer.from_crs("EPSG:25829","EPSG:4326",always_xy=True)
+trans = Transformer.from_crs("EPSG:25829","EPSG:4326",always_xy=True) #HUSO29
+#trans = Transformer.from_crs("EPSG:25829","EPSG:4326",always_xy=True) #HUSO30
 
 # POLIGONAL PARQUE
 if(pi!=0):
@@ -94,6 +97,18 @@ if(si!=0):
     pol2.style.linestyle.color = simplekml.Color.rgb(255,234,0)
     pol2.style.linestyle.width = 2
     pol2.style.polystyle.color = simplekml.Color.changealphaint(100, simplekml.Color.rgb(255,234,0))
+
+# PUNTOS SUBESTACIÓN
+if(psi!=0):
+    coordList3 = []
+    for row in itertools.islice(inputfile, psi-1, psj):
+        coordsSet3= trans.transform(row[1],row[2])
+        coordList3.append(coordsSet3)
+        #Puntos
+        subpnt = kml.newpoint(name=row[0])
+        subpnt.coords = [coordsSet3]
+        subpnt.style.iconstyle.scale = 0.8
+        subpnt.style.iconstyle.icon.href = "sub.png"
 
 # AEROXENERADORES MODELO 3D
 if(ai!=0):
@@ -139,6 +154,7 @@ zipObj.write('molino.png')
 zipObj.write('torremet.png')
 zipObj.write('laat.png')
 zipObj.write('untitled.dae')
+zipObj.write('sub.png')
 # close the Zip File
 zipObj.close()
 
