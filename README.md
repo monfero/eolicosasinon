@@ -16,9 +16,9 @@ O script serve para crear unha visualización dos diferentes elementos dun parqu
 
 ## Uso
 
-1. Utiliza a folla de cálculo modelo para almacenar todos os datos de coordenadas do parque.
+1. Utiliza a folla de cálculo modelo para almacenar todos os datos de coordenadas do parque: **modelo_de_datos_GL_v1_0.xlsx**
 2. Sube a folla de cálculo ao teu Google Drive.
-3. Configura o script co nome da folla de cálculo.
+3. Abre o Notebook en Colab e configura o script: **xlsx2kmz.ipynb**
 4. Executa o script e obtén o ficheiro KMZ.
 
 ## Configuración do equipo
