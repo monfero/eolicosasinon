@@ -1,7 +1,7 @@
 # #eolicosAsiNon
 Ferramentas para a defensa do territorio contra os macroparques eolicos
 
-**eolicos xlsx2kmz.ipynb** - Notebook python versión Colab.
+**eolicos xlsx2kmz.ipynb** - *Notebook* python versión Colab.
 
 O script serve para crear unha visualización dos diferentes elementos dun parque eólico (aeroxeneradores, liñas de alta tensión (LAAT), poligonais, ...) a partir dos datos publicados no BOE. Os datos extráense de xeito manual desde a publicación do BOE e gárdanse nunha folla de cálculo. O script traduce as coordenadas dos diferentes elementos, en formato EPSG:25829/30, a formato EPSG:4326, e crea un ficheiro KMZ que se pode importar en ferramentas como Google Maps ou Google Eearth.
 
@@ -16,9 +16,9 @@ O script serve para crear unha visualización dos diferentes elementos dun parqu
 
 ## Uso
 
-1. Utiliza a folla de cálculo modelo para almacenar todos os datos de coordenadas do parque: **modelo_de_datos_GL_v1_0.xlsx**
+1. Utiliza a folla de cálculo modelo para almacenar todos os datos de coordenadas do parque: [modelo_de_datos_GL_v1_0.xlsx](https://github.com/monfero/eolicosasinon/blob/main/scripts/modelo_de_datos_GL_v1_0.xlsx)
 2. Sube a folla de cálculo ao teu Google Drive.
-3. Abre o Notebook en Colab e configura o script: **xlsx2kmz.ipynb**
+3. Abre o Notebook en Colab e configura o script: [xlsx2kmz.ipynb](https://github.com/monfero/eolicosasinon/blob/main/scripts/eolicos_xls2kmz.ipynb)
 4. Executa o script e obtén o ficheiro KMZ.
 
 ## Configuración do equipo
